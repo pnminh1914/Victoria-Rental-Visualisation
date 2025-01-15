@@ -1,97 +1,164 @@
-body {
+/* Reset default styles */
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.layout {
-    display: flex;
-    width: 100%;
-    height: calc(100% - 60px); /* Adjust for header height */
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #f4f4f4;
-    border-right: 1px solid #ccc;
-    padding: 20px;
+    padding: 0;
     box-sizing: border-box;
 }
 
-.sidebar h2 {
-    margin: 0 0 10px;
-    color: #4CAF50;
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
 }
 
-.sidebar ul {
+/* Header styling */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    flex-shrink: 0; /* Prevent shrinking when resizing */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Keep the header above other elements */
+}
+
+/* Main container layout */
+.container {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 70px; /* Offset for fixed header */
+    height: calc(100vh - 70px); /* Full height minus header */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Side navbar styling */
+.side-nav {
+    width: 200px;
+    background-color: #f4f4f4;
+    height: 100%;
+    overflow-y: auto;
+    border-right: 1px solid #ccc;
+    padding-top: 10px;
+    flex-shrink: 0; /* Keep fixed width */
+}
+
+.side-nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
-.sidebar ul li {
-    margin-bottom: 10px;
+.side-nav ul li {
+    margin: 10px 0;
 }
 
-.sidebar ul li a {
+.side-nav ul li a {
     text-decoration: none;
     color: #333;
-    font-size: 14px;
-    padding: 8px 12px;
     display: block;
-    border-radius: 4px;
+    padding: 10px;
+    border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.sidebar ul li a:hover,
-.sidebar ul li a.active {
-    background-color: #4CAF50;
+.side-nav ul li a:hover {
+    background-color: #ddd;
+}
+
+/* Highlight active link */
+.side-nav ul li a.active {
+    background-color: #007bff;
     color: white;
 }
 
-#back-button {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 14px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    transition: background-color 0.3s;
+/* Content container styling */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* Allow scrolling for overflowing content */
+    background-color: #fafafa;
 }
 
-#back-button:hover {
-    background-color: #45a049;
+/* Scrollbar styling (optional) */
+.side-nav::-webkit-scrollbar,
+main::-webkit-scrollbar {
+    width: 8px;
 }
 
-#back-button.hidden {
-    display: none;
+.side-nav::-webkit-scrollbar-thumb,
+main::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
 }
 
-.main-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.side-nav::-webkit-scrollbar-thumb:hover,
+main::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .side-nav {
+        width: 150px;
+    }
+
+    main {
+        padding: 15px;
+    }
+}
+
+/* Content container styling for map visualization */
+.map-visualization-container {
+    display: flex; /* Flex layout to align options and map side-by-side */
+    height: 100%; /* Ensure it fills the available space */
+}
+
+/* Options bar styling */
+.map-options {
+    width: 250px;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ccc;
+    padding: 15px;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    box-sizing: border-box;
+}
+
+/* Map container styling */
+#map-container {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 15px;
     background-color: #fff;
+    overflow: hidden; /* Prevent scrollbars */
+    display: flex;
+    justify-content: center; /* Center the map horizontally */
+    align-items: center; /* Center the map vertically */
 }
 
-iframe {
-    width: 90%;
-    height: 90%;
-    border: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Suburb visualization container styling */
+.suburb-visualization-container {
+    display: flex; /* Flex layout to align form and chart side-by-side */
+    height: 100%; /* Ensure it fills the available space */
+}
+
+/* Form container styling */
+.suburb-form-container {
+    width: 300px; /* Fixed width for the form */
+    background-color: #f4f4f4;
+    border-right: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Chart container styling */
+#chart-container {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 15px;
+    background-color: #fff;
+    overflow: hidden; /* Prevent scrollbars */
+    display: flex;
+    justify-content: center; /* Center the chart horizontally */
+    align-items: center; /* Center the chart vertically */
 }
