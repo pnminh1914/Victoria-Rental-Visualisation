@@ -162,3 +162,102 @@ main::-webkit-scrollbar-thumb:hover {
     justify-content: center; /* Center the chart horizontally */
     align-items: center; /* Center the chart vertically */
 }
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+/* Search box */
+#dropdown-search {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Style for the dropdown container */
+.dropdown-options {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+/* Style for each dropdown option */
+.dropdown-option {
+    padding: 10px;
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Highlight the option on hover */
+.dropdown-option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Selected options styling (optional) */
+.dropdown-option.selected {
+    background-color: #d0e8ff;
+    font-weight: bold;
+}
+
+/* Selected suburb count */
+#selected-count {
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
+}
+
+.clear-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.clear-btn:hover {
+    background-color: #0056b3;
+}
+
+#quarter-heading {
+    margin-bottom: 20px; /* Adjust spacing as needed */
+    font-size: 20px; /* Optional: Style the heading */
+    font-weight: bold;
+}
+
+#map-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
+    gap: 10px; /* Add spacing between buttons */
+}
+
+.map-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.map-button:hover {
+    background-color: #0056b3;
+}
