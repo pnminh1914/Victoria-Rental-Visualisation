@@ -1,3 +1,36 @@
+/* CSS Custom Properties */
+:root {
+    /* Color palette */
+    --color-primary: #344E41;
+    --color-secondary: #A3B18A;
+    --color-accent: #DAD7CD;
+    --color-background: #ffffff;
+    --color-text: #333333;
+    --color-border: #e0e0e0;
+    --color-hover: #f5f5f5;
+    
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    
+    /* Border radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 5px;
+    --border-radius-lg: 8px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
 /* Reset default styles */
 * {
     margin: 0;
@@ -6,258 +39,459 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
+    color: var(--color-text);
+    line-height: 1.5;
 }
 
 /* Header styling */
 header {
-    background-color: #333;
-    color: white;
-    padding: 15px;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    padding: 0;
     text-align: center;
-    flex-shrink: 0; /* Prevent shrinking when resizing */
+    flex-shrink: 0;
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000; /* Keep the header above other elements */
+    z-index: 1000;
+    box-shadow: var(--shadow-md);
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+header h1 {
+    font-size: 3.2rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* Top navbar styling */
+.top-nav {
+    width: 100%;
+    background-color: var(--color-secondary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    position: fixed;
+    top: 90px;
+    left: 0;
+    z-index: 999;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+}
+.top-nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.top-nav ul li {
+    margin: 0 var(--spacing-xl);
+}
+.top-nav ul li a {
+    display: block;
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: 14px 30px;
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
+    transition: background-color var(--transition-normal), color var(--transition-normal), box-shadow var(--transition-normal);
+    font-size: 1.1rem;
+    border: 1.5px solid transparent;
+    box-sizing: border-box;
+    height: 100%;
+}
+.top-nav ul li a:hover,
+.top-nav ul li a.active {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border: 1.5px solid var(--color-primary);
+    box-shadow: 0 2px 8px rgba(52,78,65,0.08);
 }
 
 /* Main container layout */
 .container {
     display: flex;
-    flex-grow: 1;
-    margin-top: 70px; /* Offset for fixed header */
-    height: calc(100vh - 70px); /* Full height minus header */
-    overflow: hidden; /* Prevent content overflow */
-}
-
-/* Side navbar styling */
-.side-nav {
-    width: 200px;
-    background-color: #f4f4f4;
-    height: 100%;
-    overflow-y: auto;
-    border-right: 1px solid #ccc;
-    padding-top: 10px;
-    flex-shrink: 0; /* Keep fixed width */
-}
-
-.side-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-.side-nav ul li {
-    margin: 10px 0;
-}
-
-.side-nav ul li a {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.side-nav ul li a:hover {
-    background-color: #ddd;
-}
-
-/* Highlight active link */
-.side-nav ul li a.active {
-    background-color: #007bff;
-    color: white;
+    flex-direction: column;
+    margin-top: 154px; /* header (90px) + nav (64px) */
+    height: calc(100vh - 154px);
+    overflow: hidden;
 }
 
 /* Content container styling */
 main {
     flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto; /* Allow scrolling for overflowing content */
-    background-color: #fafafa;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    background-color: var(--color-background);
 }
 
-/* Scrollbar styling (optional) */
-.side-nav::-webkit-scrollbar,
-main::-webkit-scrollbar {
-    width: 8px;
-}
-
-.side-nav::-webkit-scrollbar-thumb,
-main::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 5px;
-}
-
-.side-nav::-webkit-scrollbar-thumb:hover,
-main::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .side-nav {
-        width: 150px;
-    }
-
-    main {
-        padding: 15px;
-    }
-}
-
-/* Content container styling for map visualization */
+/* Map visualization container */
 .map-visualization-container {
-    display: flex; /* Flex layout to align options and map side-by-side */
-    height: 100%; /* Ensure it fills the available space */
+    display: flex;
+    height: 100%;
+    gap: var(--spacing-md);
 }
 
 /* Options bar styling */
 .map-options {
-    width: 250px;
-    background-color: #f4f4f4;
-    border-right: 1px solid #ccc;
-    padding: 15px;
-    overflow-y: auto; /* Allow scrolling if content overflows */
-    box-sizing: border-box;
+    width: 280px;
+    background-color: var(--color-background);
+    border-right: 1px solid var(--color-border);
+    padding: var(--spacing-md);
+    overflow-y: auto;
+    box-shadow: var(--shadow-sm);
 }
 
 /* Map container styling */
 #map-container {
-    flex-grow: 1; /* Take up remaining space */
-    padding: 15px;
-    background-color: #fff;
-    overflow: hidden; /* Prevent scrollbars */
+    flex-grow: 1;
+    padding: var(--spacing-md);
+    background-color: var(--color-background);
+    overflow: hidden;
     display: flex;
-    justify-content: center; /* Center the map horizontally */
-    align-items: center; /* Center the map vertically */
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
-/* Suburb visualization container styling */
+/* Suburb visualization container */
 .suburb-visualization-container {
-    display: flex; /* Flex layout to align form and chart side-by-side */
-    height: 100%; /* Ensure it fills the available space */
+    display: flex;
+    height: 100%;
+    gap: var(--spacing-md);
 }
 
 /* Form container styling */
 .suburb-form-container {
-    width: 300px; /* Fixed width for the form */
-    background-color: #f4f4f4;
-    border-right: 1px solid #ccc;
-    padding: 15px;
-    box-sizing: border-box;
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    width: 320px;
+    background-color: var(--color-background);
+    border-right: 1px solid var(--color-border);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Chart container styling */
 #chart-container {
-    flex-grow: 1; /* Take up remaining space */
-    padding: 15px;
-    background-color: #fff;
-    overflow: hidden; /* Prevent scrollbars */
+    flex-grow: 1;
+    padding: var(--spacing-md);
+    background-color: var(--color-background);
+    overflow: hidden;
     display: flex;
-    justify-content: center; /* Center the chart horizontally */
-    align-items: center; /* Center the chart vertically */
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
-/* Dropdown container */
+/* Dropdown styling */
 .dropdown {
     position: relative;
     width: 100%;
     max-width: 400px;
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-sm);
 }
 
-/* Search box */
 #dropdown-search {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    transition: border-color var(--transition-fast);
 }
 
-/* Style for the dropdown container */
+#dropdown-search:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(52, 78, 65, 0.1);
+}
+
 .dropdown-options {
-    border: 1px solid #ccc;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-md);
     max-height: 200px;
     overflow-y: auto;
-    display: none; /* Hidden by default */
-    position: absolute;
-    background-color: white;
-    z-index: 1000;
-    width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    z-index: 3;
+    display: none;
 }
 
-/* Style for each dropdown option */
+.dropdown-options.active {
+    display: block;
+}
+
 .dropdown-option {
-    padding: 10px;
-    cursor: pointer; /* Change cursor to pointer */
-    transition: background-color 0.2s ease-in-out;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
 }
 
-/* Highlight the option on hover */
 .dropdown-option:hover {
-    background-color: #f0f0f0;
+    background-color: var(--color-hover);
 }
 
-/* Selected options styling (optional) */
 .dropdown-option.selected {
-    background-color: #d0e8ff;
-    font-weight: bold;
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    font-weight: 500;
 }
 
-/* Selected suburb count */
-#selected-count {
-    font-size: 14px;
-    color: #333;
-    margin-top: 5px;
-}
-
-.clear-btn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.clear-btn:hover {
-    background-color: #0056b3;
-}
-
-#quarter-heading {
-    margin-bottom: 20px; /* Adjust spacing as needed */
-    font-size: 20px; /* Optional: Style the heading */
-    font-weight: bold;
-}
-
-#map-list {
+/* Selected suburbs display */
+.selected-suburbs {
+    margin-top: var(--spacing-md);
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap to the next line */
-    gap: 10px; /* Add spacing between buttons */
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    min-height: 40px;
+    position: relative;
+    z-index: 1;
+    transition: margin-top var(--transition-normal);
 }
 
-.map-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+.selected-suburb {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.9em;
+}
+
+.selected-suburb .delete-suburb {
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    font-size: 12px;
+    transition: all var(--transition-fast);
+}
+
+.selected-suburb .delete-suburb:hover {
+    background-color: var(--color-accent);
+    transform: scale(1.1);
+}
+
+/* When dropdown is active, shift content down */
+.dropdown-options.active ~ .selected-suburbs {
+    margin-top: 130px;
+}
+
+/* Form content styling */
+.suburb-form-content {
+    position: relative;
+    z-index: 1;
+    padding-top: var(--spacing-md);
+    background-color: var(--color-background);
+    margin-top: var(--spacing-md);
+    transition: margin-top var(--transition-normal);
+}
+
+/* When dropdown is active, shift form content down */
+.dropdown-options.active ~ .suburb-form-content {
+    margin-top: var(--spacing-lg);
+}
+
+.suburb-form-content label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.suburb-form-content input[type="number"] {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+#selected-count {
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Button styling */
+.map-button, .clear-btn, button[id="apply-btn"] {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all var(--transition-normal);
     text-align: center;
 }
 
+.map-button {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    width: 100%;
+    margin: 0;
+}
+
 .map-button:hover {
-    background-color: #0056b3;
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    margin-top: var(--spacing-sm);
+}
+
+.clear-btn:hover {
+    background-color: var(--color-accent);
+}
+
+button[id="apply-btn"] {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    font-size: 16px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+button[id="apply-btn"]:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+}
+
+button[id="apply-btn"]:active {
+    background-color: var(--color-accent);
+    transform: translateY(0);
+}
+
+button[id="apply-btn"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 78, 65, 0.3);
+}
+
+/* Map list and buttons styling */
+#map-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    max-width: 600px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .map-options,
+    .suburb-form-container {
+        width: 250px;
+    }
+    
+    main {
+        padding: var(--spacing-md);
+    }
+    
+    .map-visualization-container,
+    .suburb-visualization-container {
+        flex-direction: column;
+    }
+    
+    .map-options,
+    .suburb-form-container {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+/* Focus styles for better accessibility */
+:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .side-nav,
+    .map-options,
+    .suburb-form-container {
+        display: none;
+    }
+    
+    main {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+/* Suburb search and selection styling */
+.suburb-search-container {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+    z-index: 2;
+}
+
+#dropdown-search {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    background-color: var(--color-background);
+}
+
+#dropdown-search:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(52, 78, 65, 0.1);
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-md);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 3;
+    display: none;
+}
+
+.dropdown-options.active {
+    display: block;
+}
+
+.dropdown-option {
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.dropdown-option:hover {
+    background-color: var(--color-hover);
 }

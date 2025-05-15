@@ -9,34 +9,17 @@
 </head>
 <body>
     <header>
-        <h1>Victoria Future Median Rental Price Prediction</h1>
+        <h1>Victoria Future Median Rental Price Visualization</h1>
     </header>
+    <nav class="top-nav">
+        <ul>
+            <li><a href="#" id="landing-page-btn">Landing Page</a></li>
+            <li><a href="#" id="map-visualization-btn">Map Visualization</a></li>
+            <li><a href="#" id="suburb-visualization-btn">Suburb Visualization</a></li>
+        </ul>
+    </nav>
     <div class="container">
-        <nav class="side-nav">
-            <ul>
-                <li><a href="#" id="landing-page-btn">Landing Page</a></li>
-                <li><a href="#" id="map-visualization-btn">Map Visualization</a></li>
-                <li><a href="#" id="suburb-visualization-btn">Suburb Visualization</a></li>
-            </ul>
-        </nav>
-        <main id="content">
-            <!-- Suburb Visualization Content -->
-            <div id="suburb-visualization" style="display: none;">
-                <h2>Suburb Visualization</h2>
-                <form id="suburb-form">
-                    <div class="dropdown">
-                        <input type="text" id="dropdown-search" placeholder="Type to search suburbs..." autocomplete="off">
-                        <div id="dropdown-options" class="dropdown-options"></div>
-                        <button id="clear-selection" class="clear-btn">Clear Selection</button>
-                    </div>
-                    <p id="selected-count">Selected: 0 / 3</p>
-                    <label for="start-year">Start Year:</label>
-                    <input type="number" id="start-year" min="2000" max="2027" value="2000">
-                    <button type="submit">Apply</button>
-                </form>
-                <div id="chart-container" class="chart-container"></div>
-            </div>
-        </main>
+        <main id="content"></main>
     </div>
     <script src="script.js"></script>
 </body>

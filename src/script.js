@@ -14,7 +14,7 @@ suburbVisualizationBtn.addEventListener('click', showSuburbVisualization);
 
 // Show Landing Page
 function showLandingPage() {
-    content.innerHTML = `<p>Welcome to the Victoria Future Median Rental Price Prediction tool. Use the sidebar to navigate.</p>`;
+    content.innerHTML = `<p>Welcome to the Victoria Future Median Rental Price Prediction tool. Use the topbar to navigate.</p>`;
 }
 
 // Show Map Visualization
@@ -22,7 +22,7 @@ function showMapVisualization() {
     content.innerHTML = `
         <div class="map-visualization-container">
             <div class="map-options">
-                <h3>Choose a Quarter</h3>
+                <div class="form-label" style="margin-bottom: 6px; font-weight: 500;">Choose a quarter:</div>
                 <ul id="map-list"></ul>
             </div>
             <div id="map-container">
@@ -61,15 +61,18 @@ function showSuburbVisualization() {
     content.innerHTML = `
         <div class="suburb-visualization-container">
             <div class="suburb-form-container">
-                <h3>Suburb Visualization</h3>
-                <div class="dropdown">
+                <div class="form-label" style="margin-bottom: 6px; font-weight: 500;">Search for a suburb:</div>
+                <div class="suburb-search-container">
                     <input type="text" id="dropdown-search" placeholder="Type to search suburbs..." autocomplete="off">
                     <div id="dropdown-options" class="dropdown-options"></div>
                 </div>
-                <p id="selected-count">Selected: 0 / 3</p>
-                <label for="start-year">Start Year:</label>
-                <input type="number" id="start-year" min="2000" max="2027" value="2000">
-                <button id="apply-btn">Apply</button>
+                <div class="selected-suburbs"></div>
+                <div class="suburb-form-content">
+                    <p id="selected-count">Selected: 0 / 5</p>
+                    <label for="start-year">Start Year:</label>
+                    <input type="number" id="start-year" min="2000" max="2027" value="2000">
+                    <div><button id="apply-btn">Apply</button></div>
+                </div>
             </div>
             <div id="chart-container">
                 <p>Select suburbs and a start year to display the chart.</p>
@@ -93,12 +96,21 @@ function initializeDropdown(suburbs) {
     const dropdownSearch = document.getElementById('dropdown-search');
     const dropdownOptions = document.getElementById('dropdown-options');
     const selectedCount = document.getElementById('selected-count');
+    const selectedSuburbsContainer = document.querySelector('.selected-suburbs');
     let selectedSuburbs = [];
+    const MAX_SUBURBS = 5;
 
     // Display dropdown when clicking on the input
     dropdownSearch.addEventListener('focus', () => {
-        dropdownOptions.style.display = 'block';
+        dropdownOptions.classList.add('active');
         populateDropdownOptions(suburbs);
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', event => {
+        if (!dropdownOptions.contains(event.target) && event.target !== dropdownSearch) {
+            dropdownOptions.classList.remove('active');
+        }
     });
 
     // Typing suggestions
@@ -106,52 +118,64 @@ function initializeDropdown(suburbs) {
         const query = dropdownSearch.value.toLowerCase();
         const filteredSuburbs = suburbs.filter(suburb => suburb.toLowerCase().includes(query));
         populateDropdownOptions(filteredSuburbs);
+        dropdownOptions.classList.add('active');
     });
 
-// Populate dropdown options
-function populateDropdownOptions(filteredSuburbs) {
-    dropdownOptions.innerHTML = '';
-    filteredSuburbs.forEach(suburb => {
-        const option = document.createElement('div');
-        option.classList.add('dropdown-option');
-        option.textContent = suburb;
-
-        option.addEventListener('click', () => {
+    // Populate dropdown options
+    function populateDropdownOptions(filteredSuburbs) {
+        dropdownOptions.innerHTML = '';
+        filteredSuburbs.forEach(suburb => {
+            const option = document.createElement('div');
+            option.classList.add('dropdown-option');
             if (selectedSuburbs.includes(suburb)) {
-                selectedSuburbs = selectedSuburbs.filter(s => s !== suburb);
-            } else if (selectedSuburbs.length < 3) {
-                selectedSuburbs.push(suburb);
-            } else {
-                alert('You can select a maximum of 3 suburbs.');
+                option.classList.add('selected');
             }
-            updateSelectedCount();
-            highlightSelectedOptions();
+            option.textContent = suburb;
+
+            option.addEventListener('click', () => {
+                if (selectedSuburbs.includes(suburb)) {
+                    selectedSuburbs = selectedSuburbs.filter(s => s !== suburb);
+                    option.classList.remove('selected');
+                } else if (selectedSuburbs.length < MAX_SUBURBS) {
+                    selectedSuburbs.push(suburb);
+                    option.classList.add('selected');
+                } else {
+                    alert(`You can select a maximum of ${MAX_SUBURBS} suburbs.`);
+                }
+                updateSelectedSuburbs();
+                updateSelectedCount();
+                dropdownOptions.classList.remove('active');
+            });
+
+            dropdownOptions.appendChild(option);
         });
+    }
 
-        dropdownOptions.appendChild(option);
-    });
-}
+    function updateSelectedSuburbs() {
+        selectedSuburbsContainer.innerHTML = '';
+        selectedSuburbs.forEach(suburb => {
+            const suburbElement = document.createElement('div');
+            suburbElement.classList.add('selected-suburb');
+            suburbElement.innerHTML = `
+                <span>${suburb}</span>
+                <span class="delete-suburb">×</span>
+            `;
 
-function updateSelectedCount() {
-    selectedCount.textContent = `Selected: ${selectedSuburbs.length} / 3`;
-}
+            // Add delete functionality
+            const deleteButton = suburbElement.querySelector('.delete-suburb');
+            deleteButton.addEventListener('click', () => {
+                selectedSuburbs = selectedSuburbs.filter(s => s !== suburb);
+                updateSelectedSuburbs();
+                updateSelectedCount();
+            });
 
-function highlightSelectedOptions() {
-    document.querySelectorAll('.dropdown-option').forEach(option => {
-        if (selectedSuburbs.includes(option.textContent)) {
-            option.classList.add('selected');
-        } else {
-            option.classList.remove('selected');
-        }
-    });
-}
+            selectedSuburbsContainer.appendChild(suburbElement);
+        });
+    }
 
-    // Hide dropdown when clicking outside
-    document.addEventListener('click', event => {
-        if (!dropdownOptions.contains(event.target) && event.target !== dropdownSearch) {
-            dropdownOptions.style.display = 'none';
-        }
-    });
+    function updateSelectedCount() {
+        selectedCount.textContent = `Selected: ${selectedSuburbs.length} / ${MAX_SUBURBS}`;
+    }
 
     // Prevent hiding dropdown when clicking inside
     dropdownOptions.addEventListener('click', event => {
@@ -192,6 +216,10 @@ function visualizeSuburbData(suburbs, startYear) {
             });
 
             const chart = new google.visualization.LineChart(document.getElementById('chart-container'));
-            chart.draw(dataTable, { title: 'Rental Price Predictions', curveType: 'function', legend: { position: 'bottom' } });
+            chart.draw(dataTable, {
+                title: 'Rental Price Predictions',
+                curveType: 'function',
+                legend: { position: 'bottom', maxLines: 10 }
+            });
         });
 }
