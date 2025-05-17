@@ -53,7 +53,7 @@ function populateMapOptions() {
 // Load Map
 function loadMap(quarter) {
     const mapContainer = document.getElementById('map-container');
-    mapContainer.innerHTML = `<iframe src="../resources/${quarter}.html" width="100%" height="600px" frameborder="0"></iframe>`;
+    mapContainer.innerHTML = `<iframe src="resources/${quarter}.html" width="100%" height="600px" frameborder="0"></iframe>`;
 }
 
 // Show Suburb Visualization
@@ -84,7 +84,7 @@ function showSuburbVisualization() {
 
 // Load Suburb Options and Initialize Dropdown
 function loadSuburbOptions() {
-    fetch('../resources/concatenated.csv')
+    fetch('resources/concatenated.csv')
         .then(response => response.text())
         .then(csvText => {
             const suburbs = csvText.split('\n').slice(1).map(row => row.split(',')[0]).filter(Boolean);
@@ -194,7 +194,7 @@ function initializeDropdown(suburbs) {
 
 // Visualize Suburb Data
 function visualizeSuburbData(suburbs, startYear) {
-    fetch('../resources/concatenated.csv')
+    fetch('resources/concatenated.csv')
         .then(response => response.text())
         .then(csvText => {
             const rows = csvText.split('\n').map(row => row.split(','));
